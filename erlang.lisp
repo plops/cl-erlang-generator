@@ -2,7 +2,7 @@
 		   (speed 0)
 		   (safety 3)))
 
-(in-package :cl-elixir-generator)
+(in-package :cl-erlang-generator)
 (setf (readtable-case *readtable*) :invert)
 
 (defparameter *file-hashes* (make-hash-table))
@@ -12,64 +12,11 @@
       "Thursday" "Friday" "Saturday"
       "Sunday"))
 
-#+nil (defun modify-source (fn-part name code &key (comment-style :hash))
-    (flet ((comment (str)
-	     (case comment-style
-	       (:hash (format nil "# ~a" str))
-	       (:html (format nil "<!-- ~a -->" str)))))
-     (let* (			  ;(fn-part "lib/hello_web/router.ex")
-	    (fn-full (format nil "~a/~a" *path* fn-part))
-					;(name "route")
-	    (fn-part-name (format nil "~a ~a" fn-part name))
-	    (start-comment (comment (format nil "USER CODE BEGIN ~a" fn-part-name)))
-	    (end-comment (comment (format nil "USER CODE END ~a" fn-part-name)))
-	    (a (with-open-file (s fn-full
-				  :direction :input)
-		 (let ((a (make-string (file-length s))))
-		   (read-sequence a s)
-		   a))))
-       (let* (
-	      ;; escape * characters to convert elixir comment to regex
-	      (regex (format nil "~a.*~a"
-			     (cl-ppcre:regex-replace-all "\\*" start-comment "\\*")
-			     (cl-ppcre:regex-replace-all "\\*" end-comment "\\*")))
-	      ;; now use the regex to replace the text between the comments
-	      (new (cl-ppcre:regex-replace (cl-ppcre:create-scanner regex :single-line-mode t)
-					   a
-					   (format nil "~a~%~a~%~a" start-comment
-						   (case comment-style
-						     (:hash (emit-elixir :code code))
-						     (:html code ;(spinneret:with-html-string code)
-						      ))
-						   end-comment))))
-	 (with-open-file (s fn-full
-			    :direction :output
-			    :if-exists :supersede
-			    :if-does-not-exist :create)
-	   (write-sequence new s))
-	 (when (eq comment-style :hash)
-	  (sb-ext:run-program "/usr/bin/mix" (list "format"
-						   (namestring fn-full
-							       )))))))
-  )
-
-(defun lprint (rest)
-     `(|IO.puts| (string
-                ,(format nil "#{__ENV__.file}:#{__ENV__.line} ~{~a~^ ~}"
-
-			 (loop for e in rest
-			       collect
-			       (format nil "~a=#{~a}"
-				       ;(substitute  #\' #\" (emit-elixir :code e))
-				       (cl-ppcre:regex-replace-all "\"" (emit-elixir :code e) "\\\"")
-				       (emit-elixir :code e)
-				       ))))))
-
 (defun write-source (name code &optional (dir (user-homedir-pathname))
 				 ignore-hash)
   (let* ((fn (merge-pathnames (format nil "~a" name)
 			      dir))
-	(code-str (emit-elixir
+	(code-str (emit-erlang
 		   :clear-env t
 		   :code code))
 	(fn-hash (sxhash fn))
@@ -141,7 +88,7 @@ return the body without them and a hash table with an environment"
 
 (defun parse-def (code &key (private nil))
   (flet ((emit (code &optional (dl 0))
-	   (emit-elixir :code code :clear-env nil :level (+ dl 0))))
+	   (emit-erlang :code code :clear-env nil :level (+ dl 0))))
    (destructuring-bind (name lambda-list &rest body) (cdr code)
      ;; def <name> ( a, b ) do ..
      ;; def <name> ( [head|tail], accumulator ) do ..
@@ -185,13 +132,13 @@ return the body without them and a hash table with an environment"
 	     (format s " do~%~a" (emit `(do ,@body)))
 	     (format s "~&end"))))))))
 
-(defun emit-elixir (&key code (str nil) (clear-env nil) (level 0))
+(defun emit-erlang (&key code (str nil) (clear-env nil) (level 0))
   ;(format t "emit ~a ~a~%" level code)
   (when clear-env
     (setf *env-functions* nil
 	  *env-macros* nil))
   (flet ((emit (code &optional (dl 0))
-	   (emit-elixir :code code :clear-env nil :level (+ dl level))))
+	   (emit-erlang :code code :clear-env nil :level (+ dl level))))
     ;(format nil "emit-elixir ~a" level)
     (if code
 	(if (listp code)

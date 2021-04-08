@@ -1,6 +1,6 @@
 ;(ql:quickload "optima")
 ;(ql:quickload "alexandria")
-(defpackage :cl-elixir-generator
+(defpackage :cl-erlang-generator
   (:use :cl
 	;:optima
 	:alexandria)
