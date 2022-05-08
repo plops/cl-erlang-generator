@@ -2,8 +2,10 @@ https://www.youtube.com/watch?v=cASS3R-SAgs
 https://github.com/sile/efmt erlang code formatter (rust)
 
 
-
- https://www.youtube.com/watch?v=aEyQcZg-Njs
- Basic Erlang I by Simon Thompson | 1/13 of Erlang Express Course
-
  Francesco Cesarini, Simon Thompson: Erlang programming O'Reilly (2009)
+o'reilly website has a video lecture (2h) by the authors from 2011
+ 
+
+ lecture series by simon thompson 2017
+ similar to the lectures on o'reilly
+ https://www.youtube.com/playlist?list=PLoFxPv8jwGVVlajiMxaW9zG1IZgHODTuq
