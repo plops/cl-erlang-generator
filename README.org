@@ -1,2 +1,9 @@
 https://www.youtube.com/watch?v=cASS3R-SAgs
 https://github.com/sile/efmt erlang code formatter (rust)
+
+
+
+ https://www.youtube.com/watch?v=aEyQcZg-Njs
+ Basic Erlang I by Simon Thompson | 1/13 of Erlang Express Course
+
+ Francesco Cesarini, Simon Thompson: Erlang programming O'Reilly (2009)
