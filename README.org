@@ -9,3 +9,7 @@ o'reilly website has a video lecture (2h) by the authors from 2011
  lecture series by simon thompson 2017
  similar to the lectures on o'reilly
  https://www.youtube.com/playlist?list=PLoFxPv8jwGVVlajiMxaW9zG1IZgHODTuq
+
+ - erlang grammar
+   https://github.com/erlang/otp/blob/master/lib/stdlib/src/erl_parse.yrl
+   - explanation https://erlang.org/pipermail/erlang-questions/2011-November/062387.html
