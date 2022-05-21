@@ -13,3 +13,53 @@ o'reilly website has a video lecture (2h) by the authors from 2011
  - erlang grammar
    https://github.com/erlang/otp/blob/master/lib/stdlib/src/erl_parse.yrl
    - explanation https://erlang.org/pipermail/erlang-questions/2011-November/062387.html
+
+
+ - examples
+
+ #+begin_example
+tuple {square, 17}
+
+
+functions multiple clauses:
+area({square, Side}) ->
+  Side * Side;
+
+area({circle, Radius}) ->
+ mypi = 3.14,
+ mypi * Radius * Radius;
+
+area(Other) ->
+  {error, invalid_object}.
+
+each argument is a pattern
+  
+ ; .. seperates clauses
+ , .. separates expressions
+ . .. separates function definitions
+
+functions with different number of arguments are different functions
+order of function clause definition is important. typically write specific first
+
+
+ function call:
+
+ Module:fun(arg1,arg2,arg3)
+
+
+factorial(0)->1;
+factorial(N)->N*factorial(N-1).
+
+
+ module directive
+
+ -module(Name).
+ -export([foo-fun/1,bar/3]).
+
+ comments: start with %
+
+
+ c(File) compiles and loads module into erl shell
+
+ 
+ #+end_example
