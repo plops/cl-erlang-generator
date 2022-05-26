@@ -125,3 +125,5 @@ factorial(N) when N>0 -> N*factorial(N-1); factorial(0) -> 1.
 https://youtu.be/fccuCKpBkV4?list=PLoFxPv8jwGVVlajiMxaW9zG1IZgHODTuq&t=1434
 
 #+end_example
+
+- https://youtu.be/N62qUfMksIQ six sigma control charts
