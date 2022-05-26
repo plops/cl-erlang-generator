@@ -1,4 +1,4 @@
-https://www.youtube.com/watch?v=cASS3R-SAgs
+ https://www.youtube.com/watch?v=cASS3R-SAgs
 https://github.com/sile/efmt erlang code formatter (rust)
 
 
@@ -17,6 +17,7 @@ o'reilly website has a video lecture (2h) by the authors from 2011
 
  - examples
 
+-  2/13
  #+begin_example
 tuple {square, 17}
 
@@ -60,6 +61,67 @@ factorial(N)->N*factorial(N-1).
 
 
  c(File) compiles and loads module into erl shell
+help()
+h() .. history (last 20 cmds)
+b() .. bindings
+f()  .. forget
+f(X) .. forget X  (only in shell!)
+e(N) .. evaluate cmd from history
+e(-1) .. evaluate prev command
+#+end_example
 
- 
- #+end_example
+- 3/13 sequential
+#+begin_example
+
+case lists:member(foo,List) of #expression
+ true -> ok;            # clause
+ false -> {error, unknown}
+end
+
+#wildcard in last clause:
+_ -> expr1, expr2
+Other
+
+# don't program defensively, let it fail
+
+# if
+
+if
+ x<1 -> smaller ;
+ x>1 -> greater ;
+ x == 1 -> equal
+end
+
+if 
+  <guard1> -> expr1, expr2; 
+  true -> expr1, expr2
+end
+
+# guard (using rerved word 'when')
+
+not arbitrary boolean expression (no function call allowed, use case for that)
+evaluate quickly, should not fail, no loop
+allowed:
+is_integer is_integer is_float
+is_atom is_pid is_tuple is_list
+length(List) == 5
+tuple_size(Tuple) == 5
+X==Y
+X =/= Y .. not equal to
+X =:= Y .. exactly equal to
+X =< Y
+X >= Y
+
+,      ..  AND conjunction
+;      ..  OR disjunction
+
+
+
+
+factorial(N) when N>0 -> N*factorial(N-1); factorial(0) -> 1.
+
+# fully guarded clauses can be reordered
+# guards can be used in function head, case, receive and if
+https://youtu.be/fccuCKpBkV4?list=PLoFxPv8jwGVVlajiMxaW9zG1IZgHODTuq&t=1434
+
+#+end_example
